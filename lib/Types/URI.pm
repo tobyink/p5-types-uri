@@ -167,6 +167,10 @@ L<URI::file>,
 L<URI::data>,
 L<URI::FromHash>.
 
+L<Types::UUID>,
+L<Types::Path::Tiny>,
+L<Types::Standard>.
+
 =head1 AUTHOR
 
 Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
