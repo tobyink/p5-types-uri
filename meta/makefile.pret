@@ -1,0 +1,18 @@
+# This file provides instructions for packaging.
+
+@prefix : <http://ontologi.es/doap-deps#>.
+
+`Types-URI`
+	:runtime-requirement    [ :on "URI"^^:CpanId ];
+	:runtime-requirement    [ :on "URI::FromHash"^^:CpanId ];
+	:runtime-requirement    [ :on "Type::Library"^^:CpanId ];
+	:runtime-requirement    [ :on "Types::Path::Tiny"^^:CpanId ];
+	:runtime-requirement    [ :on "Types::Standard"^^:CpanId ];
+	:runtime-requirement    [ :on "Types::UUID"^^:CpanId ];
+	:test-requirement       [ :on "Test::More 0.96"^^:CpanId ];
+	:test-requirement       [ :on "Test::Requires"^^:CpanId ];
+	:test-recommendation    [ :on "Moose 2.0000"^^:CpanId ];
+	:develop-recommendation [ :on "Dist::Inkt 0.001"^^:CpanId ];
+	:develop-requirement    [ :on "Test::Warnings"^^:CpanId ];
+	.
+
