@@ -4,3 +4,10 @@
 	issued  2014-04-13;
 	label   "Initial release".
 
+`Types-URI 0.002 cpan:TOBYINK`
+	issued  2014-05-20;
+	changeset [
+		item "Coercion from RDF::Trine::Node::Resource."^^Addition;
+		item "Coercion from HashRef now also applies to DataUri and FileUri."^^Change;
+		item "Repo metadata should not have been commented out."^^Packaging;
+	].
