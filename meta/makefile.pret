@@ -5,7 +5,7 @@
 `Types-URI`
 	:runtime-requirement    [ :on "URI"^^:CpanId ];
 	:runtime-requirement    [ :on "URI::FromHash"^^:CpanId ];
-	:runtime-requirement    [ :on "Type::Library"^^:CpanId ];
+	:runtime-requirement    [ :on "Type::Library 0.028"^^:CpanId ];
 	:runtime-requirement    [ :on "Types::Path::Tiny"^^:CpanId ];
 	:runtime-requirement    [ :on "Types::Standard"^^:CpanId ];
 	:runtime-requirement    [ :on "Types::UUID"^^:CpanId ];
