@@ -19,7 +19,9 @@ use Types::Path::Tiny  qw( Path );
 use Types::Standard    qw( InstanceOf ScalarRef HashRef Str );
 use Types::UUID        qw( Uuid );
 
-my $Node = InstanceOf['RDF::Trine::Node::Resource'];
+my $TrineNode = InstanceOf['RDF::Trine::Node::Resource'];
+my $TrineNS   = InstanceOf['RDF::Trine::Namespace'];
+my $XmlNS     = InstanceOf['XML::Namespace'];
 
 __PACKAGE__->meta->add_type({
 	name        => Uri,
@@ -30,7 +32,9 @@ __PACKAGE__->meta->add_type({
 		Path        ,=> q{ "URI::file"->new($_) },
 		ScalarRef   ,=> q{ do { my $u = "URI"->new("data:"); $u->data($$_); $u } },
 		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
-		$Node       ,=> q{ "URI"->new($_->uri) },
+		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
+		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
+		$XmlNS      ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -43,7 +47,9 @@ __PACKAGE__->meta->add_type({
 		Str         ,=> q{ "URI::file"->new($_) },
 		Path        ,=> q{ "URI::file"->new($_) },
 		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
-		$Node       ,=> q{ "URI"->new($_->uri) },
+		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
+		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
+		$XmlNS      ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -56,7 +62,9 @@ __PACKAGE__->meta->add_type({
 		Str         ,=> q{ do { my $u = "URI"->new("data:"); $u->data($_); $u } },
 		ScalarRef   ,=> q{ do { my $u = "URI"->new("data:"); $u->data($$_); $u } },
 		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
-		$Node       ,=> q{ "URI"->new($_->uri) },
+		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
+		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
+		$XmlNS      ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -124,7 +132,7 @@ Uses L<URI::data/new>.
 
 Coerces using L<URI::FromHash>.
 
-=item from L<RDF::Trine::Node::Resource>
+=item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
 Uses L<URI/new>.
 
@@ -148,7 +156,7 @@ Uses L<URI::file/new>. (See L<Types::Path::Tiny>.)
 
 Coerces using L<URI::FromHash>.
 
-=item from L<RDF::Trine::Node::Resource>
+=item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
 Uses L<URI/new>.
 
@@ -172,7 +180,7 @@ Uses L<URI::data/new>.
 
 Coerces using L<URI::FromHash>.
 
-=item from L<RDF::Trine::Node::Resource>
+=item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
 Uses L<URI/new>.
 
