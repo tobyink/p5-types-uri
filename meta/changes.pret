@@ -11,3 +11,10 @@
 		item "Coercion from HashRef now also applies to DataUri and FileUri."^^Change;
 		item "Repo metadata should not have been commented out."^^Packaging;
 	].
+
+`Types-URI 0.003 cpan:TOBYINK`
+	issued  2014-05-20;
+	changeset [
+		item "Coercion from RDF::Trine::Namespace."^^Addition;
+		item "Coercion from XML::Namespace."^^Addition;
+	].
