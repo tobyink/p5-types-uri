@@ -12,6 +12,7 @@
 	:test-requirement       [ :on "Test::More 0.96"^^:CpanId ];
 	:test-requirement       [ :on "Test::Requires"^^:CpanId ];
 	:test-recommendation    [ :on "Moose 2.0000"^^:CpanId ];
+	:test-suggestion        [ :on "RDF::Trine::Node::Resource"^^:CpanId ];
 	:develop-recommendation [ :on "Dist::Inkt 0.001"^^:CpanId ];
 	:develop-requirement    [ :on "Test::Warnings"^^:CpanId ];
 	.

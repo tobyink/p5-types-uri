@@ -13,11 +13,13 @@ use URI::data;
 use URI::WithBase;
 use URI::FromHash;
 
-use Type::Library -base,
-	-declare =>         qw( Uri FileUri DataUri );
+use Type::Library -base, -declare => qw( Uri FileUri DataUri );
+
 use Types::Path::Tiny  qw( Path );
 use Types::Standard    qw( InstanceOf ScalarRef HashRef Str );
 use Types::UUID        qw( Uuid );
+
+my $Node = InstanceOf['RDF::Trine::Node::Resource'];
 
 __PACKAGE__->meta->add_type({
 	name        => Uri,
@@ -27,7 +29,8 @@ __PACKAGE__->meta->add_type({
 		Str         ,=> q{ "URI"->new($_) },
 		Path        ,=> q{ "URI::file"->new($_) },
 		ScalarRef   ,=> q{ do { my $u = "URI"->new("data:"); $u->data($$_); $u } },
-		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) }
+		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
+		$Node       ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -39,6 +42,8 @@ __PACKAGE__->meta->add_type({
 	coercion    => [
 		Str         ,=> q{ "URI::file"->new($_) },
 		Path        ,=> q{ "URI::file"->new($_) },
+		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
+		$Node       ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -50,6 +55,8 @@ __PACKAGE__->meta->add_type({
 	coercion    => [
 		Str         ,=> q{ do { my $u = "URI"->new("data:"); $u->data($_); $u } },
 		ScalarRef   ,=> q{ do { my $u = "URI"->new("data:"); $u->data($$_); $u } },
+		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
+		$Node       ,=> q{ "URI"->new($_->uri) },
 	],
 });
 
@@ -117,6 +124,10 @@ Uses L<URI::data/new>.
 
 Coerces using L<URI::FromHash>.
 
+=item from L<RDF::Trine::Node::Resource>
+
+Uses L<URI/new>.
+
 =back
 
 =item C<FileUri>
@@ -132,6 +143,14 @@ Uses L<URI::file/new>.
 =item from C<Path>
 
 Uses L<URI::file/new>. (See L<Types::Path::Tiny>.)
+
+=item from C<HashRef>
+
+Coerces using L<URI::FromHash>.
+
+=item from L<RDF::Trine::Node::Resource>
+
+Uses L<URI/new>.
 
 =back
 
@@ -149,6 +168,14 @@ Uses L<URI::data/new>.
 
 Uses L<URI::data/new>.
 
+=item from C<HashRef>
+
+Coerces using L<URI::FromHash>.
+
+=item from L<RDF::Trine::Node::Resource>
+
+Uses L<URI/new>.
+
 =back
 
 =back
@@ -165,7 +192,8 @@ L<Type::Tiny::Manual>,
 L<URI>,
 L<URI::file>,
 L<URI::data>,
-L<URI::FromHash>.
+L<URI::FromHash>,
+L<RDF::Trine::Node::Resource>.
 
 L<Types::UUID>,
 L<Types::Path::Tiny>,
