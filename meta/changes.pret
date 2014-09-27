@@ -26,3 +26,9 @@
 		item "Coercions are now made immutable."^^Change;
 		item "Add dependency on Perl 5.8."^^Packaging;
 	].
+
+`Types-URI 0.005 cpan:TOBYINK`
+	issued  2014-09-27;
+	changeset [
+		item "Bump dependency on Type::Library to version 1.000000."^^Packaging;
+	].
