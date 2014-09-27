@@ -18,3 +18,11 @@
 		item "Coercion from RDF::Trine::Namespace."^^Addition;
 		item "Coercion from XML::Namespace."^^Addition;
 	].
+
+`Types-URI 0.004 cpan:TOBYINK`
+	issued  2014-09-27;
+	changeset [
+		item "Add a new Iri type, like Uri but using GWILLIAMS' IRI class. There are coercions between Uri and Iri."^^Addition;
+		item "Coercions are now made immutable."^^Change;
+		item "Add dependency on Perl 5.8."^^Packaging;
+	].
