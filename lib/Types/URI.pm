@@ -90,7 +90,7 @@ __PACKAGE__->meta->add_type({
 	],
 });
 
-1;
+__PACKAGE__->meta->make_immutable; # returns true
 
 __END__
 
