@@ -13,7 +13,7 @@ use URI::data;
 use URI::WithBase;
 use URI::FromHash;
 
-use Type::Library -base, -declare => qw( Uri FileUri DataUri );
+use Type::Library -base, -declare => qw( Uri FileUri DataUri Iri );
 
 use Types::Path::Tiny  qw( Path );
 use Types::Standard    qw( InstanceOf ScalarRef HashRef Str );
@@ -22,6 +22,13 @@ use Types::UUID        qw( Uuid );
 my $TrineNode = InstanceOf['RDF::Trine::Node::Resource'];
 my $TrineNS   = InstanceOf['RDF::Trine::Namespace'];
 my $XmlNS     = InstanceOf['XML::Namespace'];
+
+__PACKAGE__->meta->add_type({
+	name        => Iri,
+	parent      => InstanceOf['IRI'],
+	# Need to define coercions below to break circularity of
+	# Uri and Iri.
+});
 
 __PACKAGE__->meta->add_type({
 	name        => Uri,
@@ -35,8 +42,21 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
+		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });
+
+Iri->coercion->add_type_coercions(
+	Uuid        ,=> q{ do { use IRI (); "IRI"->new("urn:uuid:$_") } },
+	Str         ,=> q{ do { use IRI (); "IRI"->new($_) } },
+	Path        ,=> q{ do { use IRI (); my $u = "URI::file"->new($_); "IRI"->new($u->as_string) } },
+	ScalarRef   ,=> q{ do { use IRI (); my $u = "URI"->new("data:"); $u->data($$_); "IRI"->new($u->as_string) } },
+	HashRef     ,=> q{ do { use IRI (); "IRI"->new(URI::FromHash::uri(%$_)) } },
+	$TrineNode  ,=> q{ do { use IRI (); "IRI"->new($_->uri_value) } },
+	$TrineNS    ,=> q{ do { use IRI (); "IRI"->new($_->uri->uri_value) } },
+	$XmlNS      ,=> q{ do { use IRI (); "IRI"->new($_->uri) } },
+	Uri         ,=> q{ do { use IRI (); "IRI"->new($_->as_string) } },
+);
 
 __PACKAGE__->meta->add_type({
 	name        => FileUri,
@@ -50,6 +70,7 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
+		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });
 
@@ -65,6 +86,7 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
+		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });
 
@@ -132,6 +154,10 @@ Uses L<URI::data/new>.
 
 Coerces using L<URI::FromHash>.
 
+=item from C<Iri>
+
+Uses L<URI/new>.
+
 =item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
 Uses L<URI/new>.
@@ -155,6 +181,10 @@ Uses L<URI::file/new>. (See L<Types::Path::Tiny>.)
 =item from C<HashRef>
 
 Coerces using L<URI::FromHash>.
+
+=item from C<Iri>
+
+Uses L<URI/new>.
 
 =item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
@@ -180,11 +210,20 @@ Uses L<URI::data/new>.
 
 Coerces using L<URI::FromHash>.
 
+=item from C<Iri>
+
+Uses L<URI/new>.
+
 =item from L<RDF::Trine::Node::Resource>, L<RDF::Trine::Namespace>, L<XML::Namespace>
 
 Uses L<URI/new>.
 
 =back
+
+=item C<Iri>
+
+A class type for L<IRI>. Coercions as per C<Uri> above, plus can coerce
+from C<Uri>.
 
 =back
 
@@ -201,7 +240,8 @@ L<URI>,
 L<URI::file>,
 L<URI::data>,
 L<URI::FromHash>,
-L<RDF::Trine::Node::Resource>.
+L<RDF::Trine::Node::Resource>,
+L<IRI>.
 
 L<Types::UUID>,
 L<Types::Path::Tiny>,
