@@ -3,6 +3,7 @@
 @prefix : <http://ontologi.es/doap-deps#>.
 
 `Types-URI`
+	:runtime-requirement    [ :on "perl 5.008"^^:CpanId ];
 	:runtime-requirement    [ :on "URI"^^:CpanId ];
 	:runtime-requirement    [ :on "URI::FromHash"^^:CpanId ];
 	:runtime-requirement    [ :on "Type::Library 0.028"^^:CpanId ];
