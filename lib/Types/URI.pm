@@ -5,7 +5,7 @@ use warnings;
 package Types::URI;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.005';
+our $VERSION   = '0.006';
 
 use URI;
 use URI::file;

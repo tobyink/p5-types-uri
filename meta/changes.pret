@@ -32,3 +32,9 @@
 	changeset [
 		item "Bump dependency on Type::Library to version 1.000000."^^Packaging;
 	].
+
+`Types-URI 0.006 cpan:TOBYINK`
+	issued  2014-09-28;
+	changeset [
+		item "Coercion to_Iri should load IRI.pm at run time, not compile time."^^Bugfix;
+	].
