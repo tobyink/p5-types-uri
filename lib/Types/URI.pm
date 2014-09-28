@@ -47,15 +47,15 @@ __PACKAGE__->meta->add_type({
 });
 
 Iri->coercion->add_type_coercions(
-	Uuid        ,=> q{ do { use IRI (); "IRI"->new("urn:uuid:$_") } },
-	Str         ,=> q{ do { use IRI (); "IRI"->new($_) } },
-	Path        ,=> q{ do { use IRI (); my $u = "URI::file"->new($_); "IRI"->new($u->as_string) } },
-	ScalarRef   ,=> q{ do { use IRI (); my $u = "URI"->new("data:"); $u->data($$_); "IRI"->new($u->as_string) } },
-	HashRef     ,=> q{ do { use IRI (); "IRI"->new(URI::FromHash::uri(%$_)) } },
-	$TrineNode  ,=> q{ do { use IRI (); "IRI"->new($_->uri_value) } },
-	$TrineNS    ,=> q{ do { use IRI (); "IRI"->new($_->uri->uri_value) } },
-	$XmlNS      ,=> q{ do { use IRI (); "IRI"->new($_->uri) } },
-	Uri         ,=> q{ do { use IRI (); "IRI"->new($_->as_string) } },
+	Uuid        ,=> q{ do { require IRI; "IRI"->new("urn:uuid:$_") } },
+	Str         ,=> q{ do { require IRI; "IRI"->new($_) } },
+	Path        ,=> q{ do { require IRI; my $u = "URI::file"->new($_); "IRI"->new($u->as_string) } },
+	ScalarRef   ,=> q{ do { require IRI; my $u = "URI"->new("data:"); $u->data($$_); "IRI"->new($u->as_string) } },
+	HashRef     ,=> q{ do { require IRI; "IRI"->new(URI::FromHash::uri(%$_)) } },
+	$TrineNode  ,=> q{ do { require IRI; "IRI"->new($_->uri_value) } },
+	$TrineNS    ,=> q{ do { require IRI; "IRI"->new($_->uri->uri_value) } },
+	$XmlNS      ,=> q{ do { require IRI; "IRI"->new($_->uri) } },
+	Uri         ,=> q{ do { require IRI; "IRI"->new($_->as_string) } },
 );
 
 __PACKAGE__->meta->add_type({
