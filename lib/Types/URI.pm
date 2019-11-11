@@ -18,13 +18,11 @@ use Type::Library -base, -declare => qw( Uri FileUri DataUri Iri );
 use Types::Path::Tiny  qw( Path );
 use Types::Standard    qw( InstanceOf ScalarRef HashRef Str );
 use Types::UUID        qw( Uuid );
-use Types::Attean      qw( AtteanIRI );
 
-
+my $AtteanIRI = InstanceOf['Attean::IRI'];
 my $TrineNode = InstanceOf['RDF::Trine::Node::Resource'];
 my $TrineNS   = InstanceOf['RDF::Trine::Namespace'];
 my $XmlNS     = InstanceOf['XML::Namespace'];
-
 
 __PACKAGE__->meta->add_type({
 	name        => Iri,
@@ -45,8 +43,8 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
-      Iri         ,=> q{ "URI"->new($_->as_string) },
- 		AtteanIRI   ,=> q{ "URI"->new($_->as_string) },
+		Iri         ,=> q{ "URI"->new($_->as_string) },
+		$AtteanIRI  ,=> q{ "URI"->new($_->as_string) },
 	],
 });
 
@@ -58,18 +56,8 @@ Iri->coercion->add_type_coercions(
 	HashRef     ,=> q{ do { require IRI; "IRI"->new(URI::FromHash::uri(%$_)) } },
 	$TrineNode  ,=> q{ do { require IRI; "IRI"->new($_->uri_value) } },
 	$TrineNS    ,=> q{ do { require IRI; "IRI"->new($_->uri->uri_value) } },
-   $XmlNS      ,=> q{ do { require IRI; "IRI"->new($_->uri) } },
+	$XmlNS      ,=> q{ do { require IRI; "IRI"->new($_->uri) } },
 	Uri         ,=> q{ do { require IRI; "IRI"->new($_->as_string) } },
-);
-
-AtteanIRI->coercion->add_type_coercions(
-	Uuid        ,=> q{ do { require AtteanIRI; "AtteanIRI"->new("urn:uuid:$_") } },
-	Path        ,=> q{ do { require AtteanIRI; my $u = "URI::file"->new($_); "AtteanIRI"->new($u->as_string) } },
-	ScalarRef   ,=> q{ do { require AtteanIRI; my $u = "URI"->new("data:"); $u->data($$_); "AtteanIRI"->new($u->as_string) } },
-	$TrineNode  ,=> q{ do { require AtteanIRI; "AtteanIRI"->new($_->uri_value) } },
-	$TrineNS    ,=> q{ do { require AtteanIRI; "AtteanIRI"->new($_->uri->uri_value) } },
-	$XmlNS      ,=> q{ do { require AtteanIRI; "AtteanIRI"->new($_->uri) } },
-   # Str, Namespace, Uri and Iri are defined in Types::Attean
 );
 
 __PACKAGE__->meta->add_type({
@@ -83,8 +71,8 @@ __PACKAGE__->meta->add_type({
 		HashRef     ,=> q{ "URI"->new(URI::FromHash::uri(%$_)) },
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
-      $XmlNS      ,=> q{ "URI"->new($_->uri) },
-		AtteanIRI   ,=> q{ "URI"->new($_->as_string) },
+		$XmlNS      ,=> q{ "URI"->new($_->uri) },
+		$AtteanIRI  ,=> q{ "URI"->new($_->as_string) },
 		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });
@@ -101,7 +89,7 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
-      AtteanIRI   ,=> q{ "URI"->new($_->as_string) },
+      $AtteanIRI  ,=> q{ "URI"->new($_->as_string) },
 		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });

@@ -18,7 +18,7 @@ my $atteaniri = Attean::IRI->new('http://www.example.net/');
   my $uri = to_Uri($atteaniri);
   isa_ok($uri, 'URI');
   is("$uri", 'http://www.example.net/', "Correct string URI to Uri");
-  
+
   my $iri = to_Iri($atteaniri);
   isa_ok($iri, 'IRI');
   is($iri->as_string, 'http://www.example.net/', "Correct string URI to Iri");
@@ -31,8 +31,6 @@ _test_to_attean(IRI->new('http://www.example.net/'));
 _test_to_attean(URI::Namespace->new('http://www.example.net/'));
 
 _test_to_attean('http://www.example.net/');
-
-_test_to_attean(RDF::Trine::iri('http://www.example.net/'));
 
 sub _test_to_attean {
   my $uri = shift;
