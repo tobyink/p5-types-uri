@@ -3,13 +3,15 @@
 use strict;
 use warnings;
 use Test::More;
-use Attean;
-use Test::Requires {
-                    'Attean::IRI'      => '0.024',
-                    'Types::Namespace' => '1.10',
-                    'Types::Attean'    => '0.024',
-                    'RDF::Trine'       => '1.000',
-	                };
+
+{
+  package Local::Dummy;
+  use Test::Requires 'Attean';
+  use Test::Requires { 'Types::Namespace' => '1.10' };
+  use Test::Requires { 'Types::Attean' => '0.024' };
+  use Test::Requires { 'RDF::Trine' => '1.000' };
+}
+
 use Types::URI qw( to_Uri to_Iri );
 use Types::Namespace qw( to_Namespace );
 use Types::Attean qw(to_AtteanIRI);
