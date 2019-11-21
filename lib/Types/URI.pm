@@ -89,7 +89,7 @@ __PACKAGE__->meta->add_type({
 		$TrineNode  ,=> q{ "URI"->new($_->uri_value) },
 		$TrineNS    ,=> q{ "URI"->new($_->uri->uri_value) },
 		$XmlNS      ,=> q{ "URI"->new($_->uri) },
-      $AtteanIRI  ,=> q{ "URI"->new($_->as_string) },
+		$AtteanIRI  ,=> q{ "URI"->new($_->as_string) },
 		Iri         ,=> q{ "URI"->new($_->as_string) },
 	],
 });
