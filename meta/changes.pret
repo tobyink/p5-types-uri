@@ -38,3 +38,13 @@
 	changeset [
 		item "Coercion to_Iri should load IRI.pm at run time, not compile time."^^Bugfix;
 	].
+
+`Types-URI 0.007 cpan:TOBYINK`
+	issued  2019-11-21;
+	changeset [
+		item [
+			a Addition;
+			label "Coercions from Attean::IRI.";
+			dcs:blame cpan:KJETILK;
+		];
+	].
